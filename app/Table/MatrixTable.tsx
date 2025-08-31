@@ -1,3 +1,4 @@
+import React, { useCallback, useMemo } from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -6,7 +7,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { useEffect, useState } from 'react';
-import { ChcekboxCell } from '~/CheckboxCell/CheckboxCell';
+import { CheckboxCell } from '~/CheckboxCell/CheckboxCell';
 
 const createColumns = (count: number) =>
   Array.from({ length: count }, (_, i) => `column ${i + 1}`);
@@ -20,14 +21,14 @@ const rows = createRows(50);
 export const MatrixTable = () => {
   const [selected, setSelected] = useState<Record<string, boolean>>({});
 
-  const onChange = (selectedKey: string) => {
+  const onChange = useCallback((selectedKey: string) => {
     console.log(selectedKey);
 
     setSelected((prev) => ({
       ...prev,
       [selectedKey]: !prev[selectedKey],
     }));
-  };
+  }, []);
 
   useEffect(() => {
     console.log(selected);
@@ -50,7 +51,7 @@ export const MatrixTable = () => {
               <TableRow key={row}>
                 <TableCell>{row}</TableCell>
                 {columns.map((col) => (
-                  <ChcekboxCell
+                  <CheckboxCell
                     key={`${row}_${col}`}
                     selectedKey={`${row}_${col}`}
                     selected={!!selected[`${row}_${col}`]}

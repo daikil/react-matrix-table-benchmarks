@@ -1,3 +1,4 @@
+import React from 'react';
 import { ToggleButton, TableCell } from '@mui/material';
 import CheckIcon from '@mui/icons-material/Check';
 
@@ -6,7 +7,8 @@ type Props = {
   selected: boolean;
   setSelected: (selectedKey: string) => void;
 };
-export const ChcekboxCell = ({ selectedKey, selected, setSelected }: Props) => {
+
+const CheckboxCellInner = ({ selectedKey, selected, setSelected }: Props) => {
   return (
     <TableCell>
       <ToggleButton
@@ -19,3 +21,12 @@ export const ChcekboxCell = ({ selectedKey, selected, setSelected }: Props) => {
     </TableCell>
   );
 };
+
+// React.memo で包む。デフォルトの浅い比較でも問題ないが、明示的に比較関数を渡す例。
+export const CheckboxCell = React.memo(
+  CheckboxCellInner,
+  (prevProps, nextProps) =>
+    prevProps.selected === nextProps.selected &&
+    prevProps.selectedKey === nextProps.selectedKey &&
+    prevProps.setSelected === nextProps.setSelected
+);
