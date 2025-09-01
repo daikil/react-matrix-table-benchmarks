@@ -1,5 +1,6 @@
 import { MatrixTable } from '~/Table/MatrixTable';
 import type { Route } from './+types/home';
+import { Provider } from 'jotai';
 
 /*
   ルートファイルのポイント:
@@ -19,7 +20,9 @@ export function meta({}: Route.MetaArgs) {
 export default function Home() {
   return (
     <main className="p-4 container mx-auto">
-      <MatrixTable />
+      <Provider>
+        <MatrixTable />
+      </Provider>
     </main>
   );
 }
